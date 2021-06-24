@@ -47,9 +47,9 @@
         @Html.DisplayFor(modelItem => item.Price)
     </td>
     <td>
-        <a href="/Book/EditBook/@item.ID" title="Edit Book">Edit |</a>
-        <a href="/Book/DeleteBook/@item.ID" title="Delete Book">Delete |</a>
-        <a href="/Book/CreateBook/@item.ID" title="Create Book">Create</a>
+        @Html.ActionLink("Edit", "EditBook", new { id = item.ID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
         <a href="@Url.Action("Buy","Book",new { id = item.ID })" class="btn btn-primary">Buy</a>
     </td>
 </tr>

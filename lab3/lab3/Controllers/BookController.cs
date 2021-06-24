@@ -29,10 +29,12 @@ namespace lab3.Controllers
             }
             return View(book);
         }
+        [Authorize]
         public ActionResult CreateBook()
         {
             return View();
         }
+        [Authorize]
         [HttpPost]
         public ActionResult CreateBook(Book book)
         {
@@ -42,6 +44,7 @@ namespace lab3.Controllers
             return RedirectToAction("ListBook");
 
         }
+        [Authorize]
         public ActionResult EditBook(int id)
         {
             BookManagerContext context = new BookManagerContext();
@@ -52,6 +55,45 @@ namespace lab3.Controllers
             }
             return View(book);
         }
+        [Authorize]
+        [HttpPost]
+        public ActionResult EditBook(Book book)
+        {
+            BookManagerContext context = new BookManagerContext();
+            Book bookUpdate = context.Books.SingleOrDefault(p => p.ID == book.ID);
+            if (bookUpdate != null)
+            {
+                context.Books.AddOrUpdate(book);
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("ListBook");
+
+        }
+        [Authorize]
+        public ActionResult Delete(int id)
+        {
+            BookManagerContext context = new BookManagerContext();
+            Book book = context.Books.SingleOrDefault(p => p.ID == id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+            return View(book);
+        }
+        [Authorize]
+        [HttpPost]
+        public ActionResult DeleteBook(int id)
+        {
+            BookManagerContext context = new BookManagerContext();
+            Book book = context.Books.SingleOrDefault(p => p.ID == id);
+            if (book != null)
+            {
+                context.Books.Remove(book);
+                context.SaveChanges();
+            }
+            return RedirectToAction("ListBook");
+        }
     }
 
-}
+    }

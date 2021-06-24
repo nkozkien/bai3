@@ -1,4 +1,4 @@
-namespace lab3.Models
+﻿namespace lab3.Models
 {
     using System;
     using System.Collections.Generic;
@@ -12,22 +12,27 @@ namespace lab3.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
 
-        [Required]
-        [StringLength(255)]
+        
+        [StringLength(100, ErrorMessage = "Tiêu đề không được quá 100 ký tự")]
+        [Required(ErrorMessage = "Tiêu đề không được bỏ trống")]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Mô Tả không được bỏ trống")]
         [StringLength(255)]
         public string Description { get; set; }
 
-        [Required]
-        [StringLength(255)]
+        
+        [StringLength(30, ErrorMessage = "Tên tác giả không được quá 30 ký tự")]
+        [Required(ErrorMessage = "Tên tác giả không được bỏ trống")]
         public string Author { get; set; }
 
-        [Required]
+        
         [StringLength(255)]
+        [Required(ErrorMessage = "hình ảng không được bỏ trống")]
         public string Images { get; set; }
 
+        [Required(ErrorMessage = "Giá sách không được bỏ trống")]
+        [Range(1000,1000000,ErrorMessage = "Giá sách từ 1.000 đến 1.000.000")]
         public int Price { get; set; }
     }
 }
