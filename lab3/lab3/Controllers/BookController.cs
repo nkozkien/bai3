@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -30,10 +31,25 @@ namespace lab3.Controllers
         }
         public ActionResult CreateBook()
         {
-            Book book = new Book();
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateBook(Book book)
+        {
             BookManagerContext context = new BookManagerContext();
-            context.Books.Add(book);
+            context.Books.AddOrUpdate(book);
             context.SaveChanges();
+            return RedirectToAction("ListBook");
+
+        }
+        public ActionResult EditBook(int id)
+        {
+            BookManagerContext context = new BookManagerContext();
+            Book book = context.Books.SingleOrDefault(p => p.ID == id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
             return View(book);
         }
     }
